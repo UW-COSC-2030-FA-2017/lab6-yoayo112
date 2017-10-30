@@ -1,3 +1,9 @@
+//SchuylerVercauteren
+//Lab 6
+//Monday 10/30/2017 
+#include "stdafx.h"
+
+
 // SortedDriver.cpp
 
 // tom bailey   1445  25 mar 2014
@@ -12,10 +18,12 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-
+#include <cmath>
+#include <algorithm> 
 
 using namespace std;
-
+using std::abs;
+using std::min;
 
 // post: a sorted vector of listSize random doubles from
 //         the range minNum to maxNum has been returned.
@@ -63,8 +71,18 @@ getWords(size_t numWords, size_t wordLength, string alphabet)
 double
 mostIsolated(vector<double> & number)
 {
-	// STUB  STUB  STUB
-	return -123.456;
+	double most = number[0];
+	double dist = abs(number[1]-number[0]);
+	for (int i = 1; i < (number.size()-1); i++)
+	{
+		double nDist = min(abs(number[i] - number[i - 1]), abs(number[i] - number[i + 1]));
+		if (nDist >= dist)
+		{
+			dist = nDist;
+			most = number[i];
+		}
+	}
+	return most;
 }
 
 
@@ -74,8 +92,26 @@ mostIsolated(vector<double> & number)
 int
 unmatched(list<string> & A, list<string> & B)
 {
-	// STUB  STUB  STUB
-	return -1;
+	int count = 0;
+	while(A.front()!= A.back())
+	{
+		if (A.front() <= B.front()) {
+			while (A.front() == B.front())
+			{
+				A.pop_front();
+			}
+			if (A.front() < B.front()) { count++; A.pop_front(); }
+		}
+		if (A.front() > B.front()) {
+				B.pop_front();
+		}
+	 }
+	while (A.back() >= B.front() && (B.front() != B.back()))
+	{
+		B.pop_front();
+	}
+	if (A.back() < B.front()) { count++;}
+	return count;
 }
 
 
